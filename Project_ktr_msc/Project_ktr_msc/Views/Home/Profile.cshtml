@@ -1,5 +1,41 @@
-﻿@{
+﻿@model ProfilesViewModel
+@{
     ViewData["Title"] = "Profile";
 }
 <h1>@ViewData["Title"]</h1>
 
+
+@if (Model.Profiles.Count == 0)
+{
+    <p>Please add a profile</p>
+}
+else
+{
+    @await Html.PartialAsync("_ProfilesPartial", Model.Profiles)
+}
+
+<div class="modal fade" id="addProfileModal" tabindex="-1" role="dialog" aria-labelledby="addProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProfileModalLabel">Add a profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <input id="inputAddName" type="text" placeholder="Profile name" />
+                <input id="inputAddCompanyName" type="text" placeholder="Profile company name" />
+                <input id="inputAddEmailAdress" type="email" placeholder="Profile email adress" />
+                <input id="inputAddPhoneNumber" type="number" placeholder="Profile phone number" />
+                <div id="modalAddPlaylistMessage">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="btnAddProfile" type="button" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
