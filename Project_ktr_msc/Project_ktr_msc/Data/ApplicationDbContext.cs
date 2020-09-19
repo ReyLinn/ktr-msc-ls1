@@ -11,6 +11,8 @@ namespace Project_ktr_msc.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Library> Libraries { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -21,9 +23,19 @@ namespace Project_ktr_msc.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Profile>()
-                .HasOne(p => p.Owner)
-                .WithMany(u => u.Profiles);
+            builder.Entity<ApplicationUser>()
+                .HasOne(u => u.OwnProfile)
+                .WithOne(p => p.Owner)
+                .HasForeignKey<UserProfile>(p => p.OwnerId);
+
+            builder.Entity<ApplicationUser>()
+                .HasOne(u => u.Library)
+                .WithOne(l => l.Owner)
+                .HasForeignKey<Library>(l => l.OwnerId);
+
+            builder.Entity<Library>()
+                .HasMany(l => l.Profiles)
+                .WithOne(p => p.Library);
         }
     }
 }

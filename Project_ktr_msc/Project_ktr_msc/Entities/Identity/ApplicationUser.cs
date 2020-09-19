@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
 using Project_ktr_msc.Entities.Profiles;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Project_ktr_msc.Entities.Identity
 {
     public class ApplicationUser : IdentityUser
     {
-        public ICollection<Profile> Profiles { get; set; }
+        public UserProfile OwnProfile { get; set; }
+        public Library Library { get; set; }
     }
 }

@@ -3,12 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Security.Permissions;
 using System.Threading.Tasks;
 
 namespace Project_ktr_msc.Entities.Profiles
 {
-    public class Profile
+    public class UserProfile
     {
         [Key]
         public int Id { get; set; }
@@ -20,11 +19,13 @@ namespace Project_ktr_msc.Entities.Profiles
         public string CompanyName { get; set; }
 
         [Required]
-        public string EmailAdress  { get; set; }
+        public string EmailAdress { get; set; }
 
         [Required]
         public string TelephoneNumber { get; set; }
+
+        public string OwnerId { get; set; }
         [Required]
-        public Library Library { get; set; }
+        public ApplicationUser Owner { get; set; }
     }
 }

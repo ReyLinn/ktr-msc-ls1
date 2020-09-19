@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Project_ktr_msc.Models
 {
-    public class ProfilesViewModel
+    public class ProfileViewModel
     {
-        public List<Profile> Profiles { get; set; }
+        public bool IsProfileCreated { get; set; }
+        public UserProfile Profile { get; set; }
     }
 }

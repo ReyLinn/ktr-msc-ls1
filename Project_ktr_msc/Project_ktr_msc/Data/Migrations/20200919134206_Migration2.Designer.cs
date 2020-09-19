@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project_ktr_msc.Data;
 
 namespace Project_ktr_msc.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200919134206_Migration2")]
+    partial class Migration2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,38 +255,8 @@ namespace Project_ktr_msc.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LibraryId")
+                    b.Property<int?>("LibraryId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TelephoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LibraryId");
-
-                    b.ToTable("Profiles");
-                });
-
-            modelBuilder.Entity("Project_ktr_msc.Entities.Profiles.UserProfile", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmailAdress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -300,10 +272,12 @@ namespace Project_ktr_msc.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LibraryId");
+
                     b.HasIndex("OwnerId")
                         .IsUnique();
 
-                    b.ToTable("UserProfiles");
+                    b.ToTable("Profiles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -368,18 +342,13 @@ namespace Project_ktr_msc.Data.Migrations
 
             modelBuilder.Entity("Project_ktr_msc.Entities.Profiles.Profile", b =>
                 {
-                    b.HasOne("Project_ktr_msc.Entities.Profiles.Library", "Library")
+                    b.HasOne("Project_ktr_msc.Entities.Profiles.Library", null)
                         .WithMany("Profiles")
-                        .HasForeignKey("LibraryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                        .HasForeignKey("LibraryId");
 
-            modelBuilder.Entity("Project_ktr_msc.Entities.Profiles.UserProfile", b =>
-                {
                     b.HasOne("Project_ktr_msc.Entities.Identity.ApplicationUser", "Owner")
                         .WithOne("OwnProfile")
-                        .HasForeignKey("Project_ktr_msc.Entities.Profiles.UserProfile", "OwnerId")
+                        .HasForeignKey("Project_ktr_msc.Entities.Profiles.Profile", "OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

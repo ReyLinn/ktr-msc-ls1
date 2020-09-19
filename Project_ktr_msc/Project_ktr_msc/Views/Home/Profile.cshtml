@@ -1,41 +1,36 @@
-﻿@model ProfilesViewModel
+﻿@model ProfileViewModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = " Your profile";
 }
 <h1>@ViewData["Title"]</h1>
-
-
-@if (Model.Profiles.Count == 0)
+@Html.HiddenFor(p => Model.Profile.Id)
+@if (Model.IsProfileCreated)
 {
-    <p>Please add a profile</p>
+    <p>Name : @Model.Profile.Name</p>
+    <p>Company Name : @Model.Profile.CompanyName</p>
+    <p>Email adress : @Model.Profile.EmailAdress</p>
+    <p>Phone number : @Model.Profile.TelephoneNumber</p>
 }
 else
 {
-    @await Html.PartialAsync("_ProfilesPartial", Model.Profiles)
-}
-
-<div class="modal fade" id="addProfileModal" tabindex="-1" role="dialog" aria-labelledby="addProfileModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addProfileModalLabel">Add a profile</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="modalBody" class="modal-body">
-                <input id="inputAddName" type="text" placeholder="Profile name" />
-                <input id="inputAddCompanyName" type="text" placeholder="Profile company name" />
-                <input id="inputAddEmailAdress" type="email" placeholder="Profile email adress" />
-                <input id="inputAddPhoneNumber" type="number" placeholder="Profile phone number" />
-                <div id="modalAddPlaylistMessage">
-
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button id="btnAddProfile" type="button" class="btn btn-primary">Add</button>
-            </div>
+    <h2>Add your profile</h2>
+    <form asp-controller="Home" asp-action="AddProfileToUser" method="post">
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input type="text" class="form-control" id="Name" name="name" placeholder="Enter your name">
         </div>
-    </div>
-</div>
+        <div class="form-group">
+            <label for="CompanyName">Company Name</label>
+            <input type="text" class="form-control" id="CompanyName" name="companyName" placeholder="Enter your Company Name">
+        </div>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" class="form-control" id="Email" name="emailAdress" placeholder="Enter you email">
+        </div>
+        <div class="form-group">
+            <label for="TelephoneNumber">Phone Number</label>
+            <input type="number" class="form-control" id="TelephoneNumber" name="phoneNumber" placeholder="Enter your phone number">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+}
